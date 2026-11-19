@@ -1,0 +1,19 @@
+# Dependencies and build output
+node_modules/
+dist/
+.vite/
+coverage/
+*.log
+
+# Local analysis/test data, not part of the extension
+r6-*
+lzt-kaguyasama-*
+
+# Python leftovers
+__pycache__/
+*.pyc
+
+# OS junk
+.DS_Store
+Thumbs.db
+desktop.ini

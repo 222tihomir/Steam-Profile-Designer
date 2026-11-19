@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mock Steam Upload — Steam Profile Designer</title>
+    <style>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: #1b2838;
+        color: #c7d5e0;
+        font: 14px/1.5 'Segoe UI', Roboto, Arial, sans-serif;
+      }
+      .wrap { width: 720px; margin: 0 auto; padding: 48px 0; }
+      h1 { color: #fff; font-size: 24px; margin: 0 0 6px; }
+      .sub { color: #8f98a0; margin-bottom: 28px; }
+      .panel { background: #16202d; border: 1px solid #2a3f55; border-radius: 8px; padding: 24px; }
+      .row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+      .row label { width: 180px; color: #8f98a0; }
+      input, select { background: #0e141b; color: #dbe4ee; border: 1px solid #2a3f55; border-radius: 4px; padding: 8px 10px; font: inherit; }
+      input[type=file] { width: 100%; }
+      .log { margin-top: 20px; padding: 12px; background: #0e141b; border: 1px solid #2a3f55; border-radius: 6px; min-height: 52px; white-space: pre-wrap; color: #a4d007; font-family: Consolas, monospace; font-size: 12px; }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Загрузка иллюстрации</h1>
+      <div class="sub">Локальная копия формы Steam для проверки помощника. Публикация не выполняется.</div>
+      <div class="panel">
+        <div class="row">
+          <label for="image_width">Ширина</label>
+          <input id="image_width" type="text" value="auto" />
+        </div>
+        <div class="row">
+          <label for="image_height">Высота</label>
+          <input id="image_height" type="text" value="auto" />
+        </div>
+        <div class="row">
+          <label for="file_type">Тип файла</label>
+          <select id="file_type" name="file_type">
+            <option value="0">0 — обычное изображение</option>
+            <option value="5">5 — скриншот</option>
+            <option value="9">9 — гайд</option>
+          </select>
+        </div>
+        <div class="row">
+          <label for="consumer_app_id">Приложение</label>
+          <select id="consumer_app_id" name="consumer_app_id">
+            <option value="753">753 — Steam</option>
+            <option value="480">480 — Spacewar</option>
+          </select>
+        </div>
+        <div class="row">
+          <label for="visibility">Видимость</label>
+          <select id="visibility" name="visibility">
+            <option value="0">Публичная</option>
+            <option value="1">Только друзья</option>
+          </select>
+        </div>
+        <div class="row">
+          <label for="file">Файл</label>
+          <input id="file" type="file" accept="image/png,image/jpeg,image/gif" />
+        </div>
+        <div class="log" id="log">Ожидание изменений полей…</div>
+      </div>
+    </div>
+    <script type="module" src="/src/content/helper.ts"></script>
+    <script>
+      const fields = ['image_width', 'image_height', 'file_type', 'consumer_app_id', 'visibility']
+      const log = document.getElementById('log')
+      const lines = []
+      for (const id of fields) {
+        const el = document.getElementById(id)
+        el?.addEventListener('change', () => {
+          lines.push(`${id} = ${el.value}`)
+          log.textContent = lines.join('\n')
+        })
+      }
+    </script>
+  </body>
+</html>

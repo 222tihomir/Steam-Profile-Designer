@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mock Steam Profile — Steam Profile Designer</title>
+    <style>
+      * { box-sizing: border-box; }
+      html, body { margin: 0; min-width: 1920px; background: #1b2838; }
+      body { color: #c6d4df; font-family: 'Motiva Sans', 'Segoe UI', Roboto, Arial, sans-serif; font-size: 13px; }
+      a { color: #66c0f4; text-decoration: none; }
+      .profile_page {
+        width: 1920px;
+        min-height: 1400px;
+        background-color: #1b2838;
+        background-repeat: no-repeat;
+        background-position: top center;
+        background-size: 1920px 1080px;
+      }
+      .steam-nav {
+        height: 104px;
+        display: flex;
+        align-items: center;
+        gap: 26px;
+        padding: 0 32px;
+        background: linear-gradient(180deg, rgba(23, 33, 45, 0.98), rgba(23, 33, 45, 0.85));
+        border-bottom: 1px solid rgba(0, 0, 0, 0.35);
+        font-size: 13px;
+        letter-spacing: 0.02em;
+      }
+      .steam-nav .brand { font-weight: 700; font-size: 18px; color: #fff; letter-spacing: 0.08em; }
+      .steam-nav .brand span { color: #66c0f4; }
+      .steam-nav .mock { margin-left: auto; color: #a4d007; border: 1px solid rgba(164, 208, 7, 0.4); padding: 3px 8px; border-radius: 4px; font-size: 11px; }
+      .profile_header {
+        height: 96px;
+        background: linear-gradient(180deg, rgba(0, 0, 0, 0.05), rgba(0, 0, 0, 0.32));
+      }
+      .profile_header_content {
+        width: 976px;
+        height: 96px;
+        margin: 0 auto;
+        padding: 12px;
+        display: flex;
+        align-items: center;
+        gap: 14px;
+      }
+      .avatar {
+        width: 72px;
+        height: 72px;
+        border-radius: 4px;
+        border: 2px solid rgba(255, 255, 255, 0.25);
+        background: radial-gradient(circle at 35% 30%, #66c0f4, #2f74a8 55%, #14202c 100%);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 26px;
+        font-weight: 700;
+        color: #08131c;
+      }
+      .actual_persona_name { font-size: 22px; color: #fff; font-weight: 400; }
+      .header-sub { font-size: 12px; color: #8f9fb0; margin-top: 3px; }
+      .profile_content {
+        width: 976px;
+        margin: 0 auto;
+        padding: 16px 12px 60px;
+        display: grid;
+        grid-template-columns: 652px 288px;
+        gap: 12px;
+        align-items: start;
+      }
+      .profile_leftcol { display: flex; flex-direction: column; gap: 12px; min-width: 0; }
+      .profile_rightcol { display: flex; flex-direction: column; gap: 12px; }
+      .profile_customization {
+        background: rgba(0, 0, 0, 0.22);
+        border-radius: 4px;
+        overflow: hidden;
+        box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04) inset;
+      }
+      .profile_customization_header {
+        height: 40px;
+        display: flex;
+        align-items: center;
+        padding: 0 12px;
+        font-size: 14px;
+        color: #c6d4df;
+        background: linear-gradient(180deg, rgba(43, 59, 76, 0.82), rgba(31, 44, 58, 0.82));
+      }
+      .showcase_content { display: block; }
+      .showcase_content.featured img { display: block; width: 630px; height: 420px; object-fit: cover; }
+      .showcase_content.artwork { display: flex; gap: 9px; }
+      .showcase_content.artwork img { display: block; height: 300px; object-fit: cover; }
+      .showcase_content.artwork img.main { width: 506px; }
+      .showcase_content.artwork img.side { width: 100px; }
+      /* Workshop showcase: author row above five 122.4 px items with 4 px gaps,
+         the same 628 px image area the export slices assume. */
+      .myworkshop_showcase {
+        padding: 10px;
+        background: rgba(18, 28, 40, 0.5);
+      }
+      .workshop_showcase_header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        height: 58px;
+        margin-bottom: 10px;
+      }
+      .workshop_showcase_header .workshop_avatar {
+        width: 38px;
+        height: 38px;
+        border-radius: 3px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 16px;
+        font-weight: 700;
+        color: #08131c;
+        background: linear-gradient(135deg, #8bc53f, #4f7d1d);
+      }
+      .workshop_showcase_header .workshop_author { color: #fff; font-size: 14px; }
+      .workshop_showcase_multiitem { display: flex; gap: 4px; }
+      .workshop_showcase_multiitem img {
+        display: block;
+        width: 122.4px;
+        height: 122.4px;
+        object-fit: cover;
+        border-radius: 2px;
+      }
+      .side-card {
+        background: rgba(18, 28, 40, 0.82);
+        border-radius: 4px;
+        padding: 12px;
+        min-height: 88px;
+      }
+      .side-card h3 { margin: 0 0 8px; font-size: 12px; font-weight: 600; letter-spacing: 0.04em; color: #8f9fb0; text-transform: uppercase; }
+      .side-card p { margin: 0; color: #a9b8c7; line-height: 1.5; }
+      .fake-badge { display: inline-block; background: #2c3e50; border-radius: 4px; padding: 2px 7px; font-size: 11px; color: #cdd9e5; margin: 3px 4px 0 0; }
+
+      /* Wide-window check: Steam's content column stays 976 px and the 1920 px
+         background is centered, so profile px ≠ viewport px and the painted
+         background rect (not `.profile_page` width) defines the scale. #spdwide
+         turns this on in the mock. */
+      .spd-wide body { min-width: 2560px; }
+      .spd-wide .profile_page {
+        width: 2560px;
+        background-size: auto;
+      }
+
+      /* Steam Profile Modifier's animated background: a full-page video behind
+         the profile content. #spdvideo turns it on in this mock. */
+      .profile_animated_background {
+        position: fixed;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        overflow: hidden;
+      }
+      .profile_animated_background video {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+      body.spm-video-bg .profile_header,
+      body.spm-video-bg .profile_content,
+      body.spm-video-bg .steam-nav { position: relative; z-index: 1; }
+    </style>
+  </head>
+  <body>
+    <div
+      class="profile_page has_profile_background"
+      style="background-image: url('/mock/background.jpg')"
+    >
+      <div class="steam-nav">
+        <div class="brand">STEAM<span>®</span></div>
+        <a href="#">МАГАЗИН</a>
+        <a href="#">БИБЛИОТЕКА</a>
+        <a href="#">СООБЩЕСТВО</a>
+        <a href="#">ОБСУЖДЕНИЯ</a>
+        <span class="mock">MOCK PROFILE · локальная проверка</span>
+      </div>
+
+      <div class="profile_header">
+        <div class="profile_header_content">
+          <div class="avatar">M</div>
+          <div>
+            <div class="actual_persona_name">Mock Player</div>
+            <div class="header-sub">Уровень 42 · В сети · Локальная копия страницы профиля</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="profile_content">
+        <div class="profile_leftcol">
+          <div class="profile_customization">
+            <div class="profile_customization_header">Избранная иллюстрация</div>
+            <div class="showcase_content featured">
+              <img src="/mock/featured.jpg" alt="Featured artwork" />
+            </div>
+          </div>
+
+          <div class="profile_customization">
+            <div class="profile_customization_header">Витрина иллюстраций</div>
+            <div class="showcase_content artwork">
+              <img class="main" src="/mock/featured.jpg" alt="Artwork" />
+              <img class="side" src="/mock/background.jpg" alt="Artwork side" />
+            </div>
+          </div>
+
+          <div class="profile_customization">
+            <div class="profile_customization_header">Витрина мастерской</div>
+            <div class="myworkshop_showcase">
+              <div class="workshop_showcase_header">
+                <div class="workshop_avatar">M</div>
+                <div>
+                  <div class="workshop_author">Mock Player</div>
+                  <div class="header-sub">Избранные работы мастерской</div>
+                </div>
+              </div>
+              <div class="workshop_showcase_multiitem">
+                <img src="/mock/featured.jpg" alt="Workshop item 1" />
+                <img src="/mock/background.jpg" alt="Workshop item 2" />
+                <img src="/mock/featured.jpg" alt="Workshop item 3" />
+                <img src="/mock/background.jpg" alt="Workshop item 4" />
+                <img src="/mock/featured.jpg" alt="Workshop item 5" />
+              </div>
+            </div>
+          </div>
+
+          <div class="profile_customization">
+            <div class="profile_customization_header">Витрина скриншотов</div>
+            <div class="showcase_content artwork">
+              <img class="main" src="/mock/background.jpg" alt="Screenshot" />
+              <img class="side" src="/mock/featured.jpg" alt="Screenshot side" />
+            </div>
+          </div>
+
+          <div class="profile_customization">
+            <div class="profile_customization_header">Недавняя активность</div>
+            <div style="padding: 14px; color: #a9b8c7">
+              Тестовая карточка ниже витрин: проверяем, что предпросмотр не сдвигает разметку профиля.
+            </div>
+          </div>
+        </div>
+
+        <div class="profile_rightcol">
+          <div class="side-card">
+            <h3>Статус</h3>
+            <p>В сети. Это локальная страница для проверки измерений и наложения композиции.</p>
+          </div>
+          <div class="side-card">
+            <h3>Значки</h3>
+            <span class="fake-badge">GIF</span>
+            <span class="fake-badge">1920 px</span>
+            <span class="fake-badge">cut-out</span>
+          </div>
+          <div class="side-card">
+            <h3>О странице</h3>
+            <p>
+              Классы и размеры повторяют настоящий профиль Steam: <code>.profile_page</code>,
+              <code>.profile_leftcol</code>, <code>.profile_customization</code>,
+              <code>.showcase_content</code>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      // Hash switch: #spdwide emulates a window wider than Steam's 1920 px
+      // background, where the old scale formula made the preview too large.
+      if (location.hash.toLowerCase().includes('wide')) {
+        document.documentElement.classList.add('spd-wide')
+      }
+      // #spdnobg removes the background image, like a profile that relies on
+      // just the page colour (the fallback frame is used then).
+      if (location.hash.toLowerCase().includes('nobg')) {
+        const page = document.querySelector('.profile_page')
+        if (page) page.style.backgroundImage = 'none'
+      }
+      // Hash switch: #spdvideo adds SPM's animated <video> background so the
+      // editor's video capture path can be tested locally.
+      if (location.hash.toLowerCase().includes('video')) {
+        const page = document.querySelector('.profile_page')
+        if (page) page.style.backgroundImage = 'none'
+        const wrap = document.createElement('div')
+        wrap.className = 'profile_animated_background'
+        const video = document.createElement('video')
+        // #spdvideo-large uses a 1200×800 clip so the GIF background resolution
+        // picker has room to downscale; the default clip is only 240×135.
+        video.src = location.hash.toLowerCase().includes('large')
+          ? '/mock/spm-clip-large.webm'
+          : '/mock/spm-clip.webm'
+        if (!location.hash.toLowerCase().includes('noposter')) video.poster = '/mock/background.jpg'
+        video.autoplay = true
+        video.muted = true
+        video.loop = true
+        video.playsInline = true
+        wrap.appendChild(video)
+        page?.appendChild(wrap)
+        document.body.classList.add('spm-video-bg')
+        video.play().catch(function () {})
+      }
+      // Hash switch: #spdtile emulates Steam's tiled background (a small
+      // seamless bitmap repeated 1:1 over the page, background-size: auto).
+      if (location.hash.toLowerCase().includes('tile')) {
+        const page = document.querySelector('.profile_page')
+        if (page) {
+          const tile = document.createElement('canvas')
+          tile.width = 512
+          tile.height = 512
+          const g = tile.getContext('2d')
+          const grad = g.createLinearGradient(0, 0, 512, 512)
+          grad.addColorStop(0, '#08130f')
+          grad.addColorStop(0.55, '#14473a')
+          grad.addColorStop(1, '#0a1a15')
+          g.fillStyle = grad
+          g.fillRect(0, 0, 512, 512)
+          g.strokeStyle = 'rgba(90, 210, 170, 0.5)'
+          g.lineWidth = 9
+          for (let i = 0; i < 4; i++) {
+            g.beginPath()
+            g.arc(128 + i * 128, 256, 78, 0, Math.PI * 2)
+            g.stroke()
+          }
+          g.strokeStyle = 'rgba(40, 120, 95, 0.7)'
+          g.lineWidth = 14
+          g.beginPath()
+          g.moveTo(0, 20)
+          g.bezierCurveTo(170, 120, 340, -80, 512, 20)
+          g.stroke()
+          page.style.backgroundImage = 'url(' + tile.toDataURL('image/png') + ')'
+          page.style.backgroundColor = '#000'
+          page.style.backgroundRepeat = 'repeat'
+          page.style.backgroundSize = 'auto'
+          page.style.backgroundPosition = '49.999% 0'
+        }
+      }
+    </script>
+    <script type="module" src="/src/mock/main.ts"></script>
+  </body>
+</html>
