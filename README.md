@@ -1,10 +1,11 @@
 # Steam Profile Designer
 
 [![Manifest V3](https://img.shields.io/badge/Manifest-V3-4285F4?style=flat-square)](https://developer.chrome.com/docs/extensions/develop/migrate/what-is-mv3)
+[![Chrome | Edge | Chromium](https://img.shields.io/badge/Chrome%20%7C%20Edge%20%7C%20Chromium-supported-0f9d58?style=flat-square)](#поддержка-браузеров)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
 [![Steam Profile Modifier](https://img.shields.io/badge/Steam%20Profile%20Modifier-compatible-1b2838?style=flat-square)](https://chromewebstore.google.com/detail/steam-profile-modifier/lfjdaphbejfpncjfebkbcganmkinhhfl)
 
-Chrome-расширение (Manifest V3), которое накладывает ваши картинки и GIF на настоящую страницу профиля Steam, позволяет подогнать их мышью и скачивает готовые файлы для витрин. Всё работает локально в браузере: без сервера, аккаунтов и Steam API Key.
+Расширение для Chrome, Microsoft Edge и Chromium (Manifest V3), которое накладывает ваши картинки и GIF на настоящую страницу профиля Steam, позволяет подогнать их мышью и скачивает готовые файлы для витрин. Всё работает локально в браузере: без сервера, аккаунтов и Steam API Key.
 
 ## Работает вместе со Steam Profile Modifier
 
@@ -29,14 +30,29 @@ SPM не обязателен: без него расширение работа
 
 ## Установка
 
-Готовая сборка лежит в [Releases](https://github.com/222tihomir/Steam-Profile-Designer/releases). Отдельная установка из исходников не нужна — достаточно распаковать ZIP.
+Готовая сборка лежит в [Releases](https://github.com/222tihomir/Steam-Profile-Designer/releases). Отдельная установка из исходников не нужна — достаточно распаковать ZIP. Один и тот же архив подходит для Chrome, Edge и Chromium.
 
-1. Скачайте `Steam-Profile-Designer-*.zip` из последнего релиза и распакуйте в постоянную папку (Chrome читает расширение прямо из неё).
-2. Откройте `chrome://extensions` и включите «Режим разработчика».
-3. Нажмите «Загрузить распакованное расширение» и выберите распакованную папку — внутри должен лежать `manifest.json`.
-4. Откройте свой профиль на `steamcommunity.com` и нажмите иконку расширения.
+1. Скачайте `Steam-Profile-Designer-*.zip` из последнего релиза и распакуйте в постоянную папку (браузер читает расширение прямо из неё).
+2. Откройте страницу расширений: `chrome://extensions` в Chrome и Chromium или `edge://extensions` в Microsoft Edge.
+3. Включите «Режим разработчика».
+4. Нажмите «Загрузить распакованное расширение» (в Edge — «Загрузить распакованное») и выберите распакованную папку — внутри должен лежать `manifest.json`.
+5. Откройте свой профиль на `steamcommunity.com` и нажмите иконку расширения.
 
 После обновления релиза папку нужно заменить целиком и нажать «Обновить» на карточке расширения. Проекты и настройки хранятся в IndexedDB браузера и при этом не теряются.
+
+## Поддержка браузеров
+
+Одна и та же сборка работает в Google Chrome, Microsoft Edge и Chromium: расширение использует Manifest V3 и только общий API `chrome.*`, без сервисов, привязанных к конкретному браузеру. Отдельные сборки не нужны.
+
+| Браузер | Страница расширений | Установка |
+| --- | --- | --- |
+| Google Chrome | `chrome://extensions` | «Режим разработчика» → «Загрузить распакованное расширение» |
+| Microsoft Edge | `edge://extensions` | «Режим разработчика» → «Загрузить распакованное» |
+| Chromium | `chrome://extensions` | так же, как в Chrome |
+
+Другие Chromium-браузеры (Brave, Vivaldi, Opera) тоже подходят — установка такая же. Встроенный браузер Steam-клиента расширения не поддерживает: профиль нужно открывать в настольном браузере.
+
+В Chromium без проприетарных кодеков MP4 (H.264) может не декодироваться — для видео-слоёв используйте WebM; в Google Chrome и Edge доступны оба формата.
 
 ## Что умеет
 
@@ -82,7 +98,7 @@ npm test
 npm run build
 ```
 
-Готовые файлы появятся в `dist/`. В Chrome откройте `chrome://extensions`, включите режим разработчика, нажмите «Загрузить распакованное расширение» и выберите папку `dist`.
+Готовые файлы появятся в `dist/`. Откройте `chrome://extensions` (Chrome/Chromium) или `edge://extensions` (Edge), включите режим разработчика, нажмите «Загрузить распакованное расширение» и выберите папку `dist`.
 
 ## Как пользоваться
 

@@ -1,9 +1,9 @@
 {
   "name": "steam-profile-designer",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "type": "module",
-  "description": "Chrome extension that composes Steam backgrounds, transparent cut-outs and your own images/GIFs into showcase artwork, with a live preview on the real profile page.",
+  "description": "Manifest V3 extension for Chrome, Edge and Chromium that composes Steam backgrounds, transparent cut-outs and your own images/GIFs into showcase artwork, with a live preview on the real profile page.",
   "license": "MIT",
   "scripts": {
     "dev": "vite",

@@ -1335,7 +1335,7 @@ export function PreviewPanel({ api }: { api: EditorApi }) {
           <div className="spd-title">Студия и профиль</div>
           <div className="spd-hint">
             Здесь вы настраиваете холст, окно и картинку. Чтобы увидеть результат на настоящей странице, откройте
-            свой профиль steamcommunity.com и нажмите кнопку расширения на панели Chrome.
+            свой профиль steamcommunity.com и нажмите кнопку расширения на панели браузера.
           </div>
           {api.page?.steamId ? (
             <div className="spd-row between">
